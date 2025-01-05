@@ -1,0 +1,9 @@
+build/
+sdkconfig
+sdkconfig.old
+managed_components/
+components/arduino
+.devcontainer
+.vscode
+debug.log
+dependencies.lock
