@@ -1,0 +1,3 @@
+[submodule "components/FixedPointsArduino"]
+	path = components/FixedPointsArduino
+	url = https://github.com/jaguilar/FixedPointsArduino.git
