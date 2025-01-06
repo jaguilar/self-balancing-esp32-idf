@@ -7,3 +7,4 @@ components/arduino
 .vscode
 debug.log
 dependencies.lock
+.cache/
