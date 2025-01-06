@@ -130,27 +130,17 @@ void init_magnetometer() {
   Serial.println("Found a MLX90393 magnetometer");
 
   magnetometer.setGain(MLX90393_GAIN_1X);
-
-  // Set resolution, per axis. Aim for sensitivity of ~0.3 for all axes.
   magnetometer.setResolution(MLX90393_X, MLX90393_RES_17);
   magnetometer.setResolution(MLX90393_Y, MLX90393_RES_17);
-
-  // Set oversampling
   magnetometer.setOversampling(MLX90393_OSR_2);
-
-  // Set digital filtering
   magnetometer.setFilter(MLX90393_FILTER_3);
-
   magnetometer.setTrigInt(true);
-
   if (!magnetometer.exitMode()) {
     Serial.print("Failed to exit mode.");
   }
-
   if (!magnetometer.setBurstRate(0)) {
     Serial.println("Failed to set burst rate");
   };
-
   if (!magnetometer.startBurstMode(MLX90393_X | MLX90393_Y)) {
     Serial.println("Failed to start burst mode");
   }
