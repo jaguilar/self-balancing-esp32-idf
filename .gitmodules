@@ -1,3 +1,6 @@
 [submodule "components/FixedPointsArduino"]
 	path = components/FixedPointsArduino
 	url = https://github.com/jaguilar/FixedPointsArduino.git
+[submodule "components/Adafruit_MLX90393_Library"]
+	path = components/Adafruit_MLX90393_Library
+	url = https://github.com/jaguilar/Adafruit_MLX90393_Library.git
