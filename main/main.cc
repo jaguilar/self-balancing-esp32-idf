@@ -40,12 +40,16 @@ void update_motor_task(jemotor::MLX90393Sensor& encoder,
       debug = motor.UpdateControl(t);
     }
     xSemaphoreGive(fmotor_lock);
+    const uint64_t t_end = micros();
+    const uint64_t loop_time = t_end - t;
     if (did_update) {
       Serial.printf(
-          ">dt:%f\n>setpoint:%f\n>measurement:%f\n>p:%f\n>i:%f"
+          ">lt:%lld\n>dt:%f\n>setpoint:%f\n>"
+          "measurement:%f\n>p:%f\n>i:%f"
           "\n>d:%f\n>output:%f\n>angle:%f\n>err:%f\n",
-          debug.dt, debug.setpoint, debug.measurement, debug.p, debug.i,
-          debug.d, debug.output, angle, debug.setpoint - debug.measurement);
+          loop_time, debug.dt, debug.setpoint, debug.measurement, debug.p,
+          debug.i, debug.d, debug.output, angle,
+          debug.setpoint - debug.measurement);
     }
   }
 }
@@ -67,7 +71,6 @@ extern "C" void app_main() {
   analogWriteResolution(pin_pwma, 8);
   motor.Begin();
 
-  Wire.setPins(4, 5);
   init_magnetometer();
 
   static TaskHandle_t motor_task;
@@ -121,12 +124,14 @@ extern "C" void app_main() {
 }
 
 void init_magnetometer() {
+  Wire.setPins(4, 5);
   constexpr uint8_t i2c_addr = 0x18;
   while (!magnetometer.begin_I2C(i2c_addr)) {
     // if (! magnetometer.begin_SPI(MLX90393_CS)) {  // hardware SPI mode
     Serial.println("No magnetometer found ... check your wiring?");
     delay(5000);
   }
+  Wire.setClock(400'000);  // Note: can only happen after Wire.begin!
   Serial.println("Found a MLX90393 magnetometer");
 
   magnetometer.setGain(MLX90393_GAIN_1X);
