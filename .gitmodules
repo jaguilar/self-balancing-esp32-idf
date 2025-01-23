@@ -7,3 +7,6 @@
 [submodule "components/jeteleplot"]
 	path = components/jeteleplot
 	url = https://github.com/jaguilar/jeteleplot.git
+[submodule "components/jesl"]
+	path = components/jesl
+	url = https://github.com/jaguilar/jesl.git
